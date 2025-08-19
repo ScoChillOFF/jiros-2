@@ -1,1 +1,85 @@
-<p>login-page.component works!</p>
+<div class="login-page">
+  <h1 class="title">Welcome to <span class="brand">Jiros</span>!</h1>
+
+  <div class="auth-card">
+    <div class="toggle">
+      <button
+        tuiButton
+        [appearance]="mode() === 'login' ? 'primary' : 'flat'"
+        (click)="setMode('login')"
+        [disabled]="loading()"
+      >
+        Login
+      </button>
+      <button
+        tuiButton
+        [appearance]="mode() === 'register' ? 'primary' : 'flat'"
+        (click)="setMode('register')"
+        [disabled]="loading()"
+      >
+        Register
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+      <tui-textfield>
+        <label tuiLabel [for]="emailId">Email</label>
+        <input
+          tuiTextfield
+          [id]="emailId"
+          type="text"
+          inputmode="email"
+          formControlName="email"
+          autocomplete="email"
+        />
+      </tui-textfield>
+      <tui-error formControlName="email" [error]="[] | tuiFieldError | async" />
+
+      <tui-textfield>
+        <label tuiLabel [for]="passId">Password</label>
+        <input
+          tuiTextfield
+          [id]="passId"
+          type="password"
+          autocomplete="{{
+            isRegister() ? 'new-password' : 'current-password'
+          }}"
+          formControlName="password"
+        />
+        <tui-icon tuiPassword />
+      </tui-textfield>
+      <tui-error
+        formControlName="password"
+        [error]="[] | tuiFieldError | async"
+      />
+
+      @if (isRegister()) {
+        <tui-textfield>
+          <label tuiLabel [for]="confirmId">Confirm Password</label>
+          <input
+            tuiTextfield
+            [id]="confirmId"
+            type="password"
+            autocomplete="new-password"
+            formControlName="confirmPassword"
+          />
+          <tui-icon tuiPassword />
+        </tui-textfield>
+        <tui-error
+          formControlName="confirmPassword"
+          [error]="[] | tuiFieldError | async"
+        />
+      }
+
+      <button
+        tuiButton
+        type="submit"
+        class="submit"
+        [loading]="loading()"
+        [disabled]="form.invalid || loading()"
+      >
+        {{ mode() === 'login' ? 'Login' : 'Register' }}
+      </button>
+    </form>
+  </div>
+</div>
