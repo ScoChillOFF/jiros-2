@@ -1,6 +1,14 @@
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
+import { inject } from '@angular/core';
+import { map, take } from 'rxjs';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const authGuard: CanActivateFn = (route, state) => {
-  return true;
+export const authGuard: CanActivateFn = () => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+
+  return auth.fbUser$.pipe(
+    take(1),
+    map((user) => (user ? true : router.createUrlTree(['/login'])))
+  );
 };
