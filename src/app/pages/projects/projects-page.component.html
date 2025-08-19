@@ -1,1 +1,17 @@
-<p>projects-page.component works!</p>
+<div class="content">
+  <h1 class="title">Projects</h1>
+
+  @if (projects$ | async; as projects) {
+    @if (projects.length === 0) {
+      <p class="no-projects-message">No projects found</p>
+    } @else {
+      <div class="projects-list">
+        @for (project of projects; track project.id) {
+          <a [routerLink]="project.id" class="project-link">{{
+            project.name
+          }}</a>
+        }
+      </div>
+    }
+  }
+</div>
