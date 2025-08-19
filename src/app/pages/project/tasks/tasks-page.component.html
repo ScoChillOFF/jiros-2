@@ -1,1 +1,56 @@
-<p>tasks-page.component works!</p>
+<div class="content">
+  @if (tasks$ | async; as tasks) {
+    @if (tasks.length > 0) {
+      <div class="tasks-list">
+        <div class="table-wrapper">
+          <table tuiTable [columns]="['name', 'priority', 'status', 'dueDate']">
+            <thead tuiThead>
+              <tr tuiThGroup>
+                <th tuiTh>Name</th>
+                <th tuiTh>Priority</th>
+                <th tuiTh>Status</th>
+                <th tuiTh>Due Date</th>
+              </tr>
+            </thead>
+            <tbody tuiTbody [data]="tasks">
+              @for (task of tasks; track task.id) {
+                <tr class="task" [routerLink]="task.id" tuiTr>
+                  <td *tuiCell="'name'" tuiTd>
+                    {{ task.title }}
+                  </td>
+                  <td *tuiCell="'priority'" tuiTd>
+                    <tui-chip
+                      size="xs"
+                      [appearance]="priorityTag(task.priority)"
+                      >{{ priorityLabel(task.priority) }}</tui-chip
+                    >
+                  </td>
+                  <td *tuiCell="'status'" tuiTd>
+                    <tui-chip size="xs" [appearance]="statusTag(task.status)">{{
+                      statusLabel(task.status)
+                    }}</tui-chip>
+                  </td>
+                  <td *tuiCell="'dueDate'" tuiTd>
+                    @if (task.dueDate) {
+                      <tui-chip
+                        size="xs"
+                        [appearance]="
+                          isExpired(task.dueDate) && task.status !== 'done'
+                            ? 'outline-destructive'
+                            : 'outline'
+                        "
+                        >{{ task.dueDate | date: 'mediumDate' }}</tui-chip
+                      >
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    } @else {
+      <p class="no-tasks-message">No tasks found</p>
+    }
+  }
+</div>

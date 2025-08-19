@@ -1,0 +1,63 @@
+:host {
+  display: block;
+}
+
+.tasks-list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 12px;
+  padding: 30px 50px;
+
+  @media (max-width: 360px) {
+    padding: 30px 30px;
+  }
+}
+
+td[tuiTd] {
+  font-size: 14px !important;
+  height: 30px;
+  width: 10%;
+}
+
+td:first-child {
+  inline-size: 80%;
+}
+
+td[tuiTd] tui-chip {
+  font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+tbody[tuiTbody] td[tuiTd] {
+  background: var(--tui-base-01, #fff);
+}
+th[tuiTh] {
+  background: var(--tui-background-neutral-1);
+  font-size: 14px !important;
+}
+
+table[tuiTable] {
+  width: 100%;
+  border-radius: 10px;
+  min-width: 400px;
+}
+
+.table-wrapper {
+  border-radius: 12px;
+  border: 1px solid var(--tui-base-03, #e5e5e5);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+tr[tuiTr]:hover > td[tuiTd] {
+  cursor: pointer;
+  background: var(--tui-background-neutral-1-hover);
+  transition: background 0.2s ease;
+}
+
+.no-tasks-message {
+  padding: 30px 50px;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--tui-text-tertiary);
+}
