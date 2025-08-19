@@ -5,6 +5,12 @@
   padding: 50px;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .title {
   font-size: 38px;
   color: var(--tui-text-primary);
@@ -20,7 +26,6 @@
     text-decoration: none;
     padding: 10px 20px;
     border-radius: 10px;
-    background-color: aquamarine;
     font-size: 18px;
     color: var(--tui-text-primary);
     background-color: var(--tui-background-neutral-1);
@@ -30,4 +35,17 @@
     &:hover {
         box-shadow: 5px 8px 10px -2px rgba(0,0,0,0.1);
     }
+}
+
+.create-form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.no-projects-message {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--tui-text-tertiary);
 }

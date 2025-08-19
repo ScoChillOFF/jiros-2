@@ -1,5 +1,10 @@
 <div class="content">
-  <h1 class="title">Projects</h1>
+  <header class="header">
+    <h1 class="title">Projects</h1>
+    <button size="m" tuiButton type="button" (click)="openCreate()">
+      Create
+    </button>
+  </header>
 
   @if (projects$ | async; as projects) {
     @if (projects.length === 0) {
@@ -14,4 +19,26 @@
       </div>
     }
   }
+
+  <ng-template #createDialog let-observer>
+    <form class="create-form" [formGroup]="form" (ngSubmit)="submit(observer)">
+      <tui-textfield>
+            <input tuiTextfield id="project-name-input" formControlName="projectName" placeholder="Enter project name" />
+      </tui-textfield>
+
+      <div class="actions">
+        <button
+          type="button"
+          tuiButton
+          appearance="flat"
+          (click)="observer.complete()"
+        >
+          Cancel
+        </button>
+        <button type="submit" tuiButton [disabled]="form.invalid">
+          Create
+        </button>
+      </div>
+    </form>
+  </ng-template>
 </div>
