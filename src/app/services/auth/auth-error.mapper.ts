@@ -30,6 +30,7 @@ export function mapAuthError(err: unknown) {
       break;
 
     case 'auth/user-not-found':
+    case 'auth/invalid-credential':
     case 'auth/wrong-password':
       message = 'Incorrect email or/and password';
       break;
@@ -39,6 +40,8 @@ export function mapAuthError(err: unknown) {
       break;
 
     default:
+      console.log(code);
+      
       message = 'Unknown error has occured';
   }
 
