@@ -1,0 +1,10 @@
+stages:
+  - lint
+
+lint:
+  stage: lint
+  image: node:lts
+  before_script:
+    - npm ci
+  script:
+    - npx nx lint
