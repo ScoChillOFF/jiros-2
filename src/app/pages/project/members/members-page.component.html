@@ -10,13 +10,16 @@
 
   <div class="members-list">
     @for (member of members$ | async; track member.id) {
-      <app-user-card [user]="member"></app-user-card>
+      <div class="member">
+        <app-user-card [user]="member"></app-user-card>
+        @if (isOwner$ | async) {
+          <button (click)="onRemoveMember(member.id)" tuiButtonClose tuiIconButton size="xs">Remove</button>
+        }
+      </div>
     }
   </div>
 
   <ng-template #userTpl let-user>
     <app-user-card class="search-item" [user]="user"></app-user-card>
   </ng-template>
-
-  
 </div>
