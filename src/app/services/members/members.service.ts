@@ -6,6 +6,8 @@ import {
   doc,
   setDoc,
   deleteDoc,
+  arrayUnion,
+  arrayRemove,
 } from '@angular/fire/firestore';
 import { Observable, of, combineLatest, from } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
@@ -54,6 +56,10 @@ export class MemberService {
           throw new Error('No project selected');
         }
         const ref = doc(this.db, 'projects', projectId, 'members', userId);
+        
+        this.users.addProjectToUser$(userId, projectId).subscribe();
+        this.projects.updateProject$(projectId, {memberIds: arrayUnion(userId)}).subscribe();
+
         return from(setDoc(ref, { addedAt: Date.now() }));
       })
     );
@@ -70,6 +76,10 @@ export class MemberService {
           throw new Error('Can not delete owner');
         }
         const ref = doc(this.db, 'projects', projectId, 'members', userId);
+
+        this.users.removeProjectFromUser$(userId, projectId).subscribe();
+        this.projects.updateProject$(projectId, {memberIds: arrayRemove(userId)}).subscribe();
+
         return from(deleteDoc(ref));
       })
     );

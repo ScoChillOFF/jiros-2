@@ -1,0 +1,19 @@
+<div class="user">
+  <tui-avatar src="@tui.user" size="s" />
+  @if (user().displayName) {
+    <div class="user-name-email" tuiTitle="s">
+      <span class="main-name" [style.fontSize.px]="titleSize()">{{
+        user().displayName
+      }}</span>
+      <div tuiSubtitle class="sub-name" [style.fontSize.px]="subtitleSize()">
+        {{ user().email }}
+      </div>
+    </div>
+  } @else {
+    <div class="user-name-email" tuiTitle="s">
+      <span class="main-name" [style.fontSize.px]="titleSize()">{{
+        user().email
+      }}</span>
+    </div>
+  }
+</div>
