@@ -1,10 +1,23 @@
 :host {
-    display: flex;
-    min-height: 100vh;
+  display: flex;
+  min-height: 100vh; /* опора по высоте */
 }
 
+/* колонка контента */
 .content {
-    flex: 1 1 auto;
-    min-width: 0;
-    background: var(--tui-base-02, #f5f7fa);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  /* важное: позволяем детям сжиматься по высоте */
+  min-height: 0;
+  background: var(--tui-base-02, #f5f7fa);
+}
+
+/* контейнер под конкретную страницу (то, что раньше напрямую было router-outlet) */
+.page {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0; /* критично для внутренних скроллов */
 }
