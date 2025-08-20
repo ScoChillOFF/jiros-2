@@ -7,10 +7,8 @@ import { ProjectPageComponent } from './pages/project/project-page.component';
 import { StatsPageComponent } from './pages/project/stats/stats-page.component';
 import { MembersPageComponent } from './pages/project/members/members-page.component';
 import { TasksPageComponent } from './pages/project/tasks/tasks-page.component';
-import { TaskPageComponent } from './pages/project/task/task-page.component';
 import { authGuard } from './guards/auth/auth.guard';
 import { noAuthGuard } from './guards/no-auth/no-auth.guard';
-import { selectTaskResolver } from './resolvers/select-task/select-task.resolver';
 import { selectProjectResolver } from './resolvers/select-project/select-project.resolver';
 
 export const appRoutes: Route[] = [
@@ -53,13 +51,6 @@ export const appRoutes: Route[] = [
                 path: 'tasks',
                 children: [
                   { path: '', component: TasksPageComponent, title: 'Tasks' },
-
-                  {
-                    path: ':taskId',
-                    component: TaskPageComponent,
-                    resolve: { ok: selectTaskResolver },
-                    title: 'Task',
-                  },
                 ],
               },
             ],
