@@ -1,8 +1,8 @@
 <div class="content">
   @if (tasks$ | async; as tasks) {
-    @if (tasks.length > 0) {
-      <div class="tasks-list">
-        <div class="table-wrapper">
+    <div class="tasks-list">
+      <div class="table-wrapper">
+        @if (tasks.length > 0) {
           <table tuiTable [columns]="['name', 'priority', 'status', 'dueDate']">
             <thead tuiThead>
               <tr tuiThGroup>
@@ -47,10 +47,52 @@
               }
             </tbody>
           </table>
+        }
+        <div class="add-task">
+          @if (!isAddOpen()) {
+            <div
+              class="add-task-btn"
+              (click)="openAdd()"
+              role="button"
+              tabindex="0"
+              (keyup.enter)="openAdd()"
+              (keyup.space)="openAdd()"
+            >
+              <span class="add-icon">+</span> Add task
+            </div>
+          } @else {
+            <div class="add-form">
+              <tui-textfield tuiTextfieldSize="s">
+                <input
+                  tuiTextfield
+                  [formControl]="titleCtrl"
+                  placeholder="Task title"
+                  (keyup.enter)="submitAdd()"
+                  [readOnly]="isPending()"
+                />
+              </tui-textfield>
+              <button
+                tuiButton
+                appearance="primary"
+                size="s"
+                [disabled]="titleCtrl.invalid || isPending()"
+                (click)="submitAdd()"
+              >
+                Create
+              </button>
+              <button
+                tuiButton
+                appearance="secondary"
+                size="s"
+                [disabled]="isPending()"
+                (click)="cancelAdd()"
+              >
+                Cancel
+              </button>
+            </div>
+          }
         </div>
       </div>
-    } @else {
-      <p class="no-tasks-message">No tasks found</p>
-    }
+    </div>
   }
 </div>

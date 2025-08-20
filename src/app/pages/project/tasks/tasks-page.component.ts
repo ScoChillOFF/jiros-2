@@ -1,11 +1,13 @@
 import { TuiTable, TuiTableCell } from '@taiga-ui/addon-table';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { TaskService } from '../../../services/task/task.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { of } from 'rxjs';
-import { TuiChip } from '@taiga-ui/kit';
+import { catchError, finalize, of } from 'rxjs';
+import { TuiChip, TuiElasticContainer } from '@taiga-ui/kit';
 import { TaskPriority, TaskStatus } from '../../../models/task.interface';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TuiButton, TuiTextfield } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-tasks-page.component',
@@ -15,7 +17,10 @@ import { TaskPriority, TaskStatus } from '../../../models/task.interface';
     TuiChip,
     TuiTable,
     TuiTableCell,
-  ],
+    ReactiveFormsModule,
+    TuiButton,
+    TuiTextfield,
+],
   templateUrl: './tasks-page.component.html',
   styleUrl: './tasks-page.component.less',
 })
@@ -27,29 +32,51 @@ export class TasksPageComponent {
     status: { width: '10rem' },
   };
 
-  // readonly tasks$ = this.taskService.tasks$;
-  tasks$ = of([
-    {
-      id: '1',
-      title: 'Task 1',
-      status: 'in_progress' as TaskStatus,
-      priority: 'low' as TaskPriority,
-      dueDate: Date.now() - 200000000
-    },
-    {
-      id: '2',
-      title: 'Task 2',
-      status: 'done' as TaskStatus,
-      priority: 'medium' as TaskPriority,
-      dueDate: Date.now()
-    },
-    {
-      id: '3',
-      title: 'Task 3',
-      status: 'todo' as TaskStatus,
-      priority: 'high' as TaskPriority,
-    },
-  ]);
+  readonly tasks$ = this.taskService.tasks$;
+
+  isAddOpen = signal(false);
+  isPending = signal(false);
+
+  readonly titleCtrl = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required],
+  });
+
+  openAdd() {
+    this.isAddOpen.set(true);
+  }
+
+  cancelAdd() {
+    this.isAddOpen.set(false);
+    this.titleCtrl.reset('');
+  }
+
+  submitAdd() {
+    if (this.isPending() || this.titleCtrl.invalid) {
+      return;
+    }
+
+    const raw = this.titleCtrl.value.trim();
+    if (!raw) {
+      return;
+    }
+
+    this.isPending.set(true);
+
+    this.taskService
+      .createTask$({ title: raw })
+      .pipe(
+        finalize(() => this.isPending.set(false)),
+        catchError(() => of(null))
+      )
+      .subscribe((task) => {
+        if (!task) {
+          return;
+        }
+        this.titleCtrl.reset('');
+        this.isAddOpen.set(false);
+      });
+  }
 
   statusLabel(s: TaskStatus): string {
     switch (s) {
