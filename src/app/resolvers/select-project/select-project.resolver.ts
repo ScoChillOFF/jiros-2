@@ -1,6 +1,16 @@
-import { ResolveFn } from '@angular/router';
+import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
+import { ProjectService } from '../../services/project/project.service';
+import { inject } from '@angular/core';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const selectProjectResolver: ResolveFn<boolean> = (route, state) => {
+export const selectProjectResolver: ResolveFn<boolean> = (route: ActivatedRouteSnapshot) => {
+  const projectService = inject(ProjectService);
+
+  const projectId = route.paramMap.get('projectId');
+  if (projectId) {
+    projectService.setCurrentProject(projectId);
+  } else {
+    projectService.setCurrentProject(null);
+  }
+
   return true;
 };

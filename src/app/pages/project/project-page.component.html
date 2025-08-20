@@ -1,1 +1,16 @@
-<p>project-page.component works!</p>
+@if (currentProject$ | async; as project) {
+  <h1 class="title">{{ project.name }}</h1>
+  <tui-tabs>
+    <a tuiTab routerLink="stats" routerLinkActive>Summary</a>
+    <a tuiTab routerLink="tasks" routerLinkActive>Tasks</a>
+    <a tuiTab routerLink="members" routerLinkActive>Members</a>
+  </tui-tabs>
+  <div class="body">
+    <tui-scrollbar class="scroll-wrap">
+
+            <router-outlet></router-outlet>
+    </tui-scrollbar>
+  </div>
+} @else {
+  <h1 class="title">Project not found</h1>
+}

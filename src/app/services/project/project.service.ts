@@ -17,6 +17,7 @@ import {
   doc,
   docSnapshots,
   Firestore,
+  PartialWithFieldValue,
   query,
   updateDoc,
   where,
@@ -110,7 +111,7 @@ export class ProjectService {
     );
   }
 
-  updateProject$(id: string, patch: Partial<Project>): Observable<void> {
+  updateProject$(id: string, patch: PartialWithFieldValue<Project>): Observable<void> {
     const ref = doc(this.db, 'projects', id).withConverter(projectConverter);
     return from(updateDoc(ref, { ...patch, updatedAt: Date.now() }));
   }

@@ -1,0 +1,50 @@
+<div
+  class="search"
+  [tuiDropdown]="dropdown"
+  [tuiDropdownOpen]="ctrl.value.length >= minLength()"
+  tuiDropdownAlign="left"
+  tuiDropdownDirection="bottom"
+  tuiDropdownLimitWidth="fixed"
+>
+  <tui-textfield class="search-field" tuiTextfieldSize="m">
+    <input
+      tuiTextfield
+      [formControl]="ctrl"
+      [placeholder]="placeholder()"
+      (keyup.enter)="onEnter()"
+    />
+  </tui-textfield>
+
+  <ng-template #dropdown>
+    <div class="results">
+      @if (results$ | async; as results) {
+        @if (results.length > 0) {
+          @for (item of results; track item.id) {
+            <div
+              (click)="pick(item)"
+              (keyup.enter)="pick(item)"
+              (keyup.space)="pick(item)"
+              tabindex="0"
+              class="search-item"
+            >
+              <div class="item-container">
+                @if (itemTpl(); as tpl) {
+                  <ng-container
+                    [ngTemplateOutlet]="tpl"
+                    [ngTemplateOutletContext]="{ $implicit: item }"
+                  />
+                } @else {
+                  <div class="title">{{ item | json }}</div>
+                }
+              </div>
+            </div>
+          }
+        } @else {
+          <div class="empty item-container">Nothing found</div>
+        }
+      } @else {
+        <div class="loading item-container">Searching…</div>
+      }
+    </div>
+  </ng-template>
+</div>

@@ -12,6 +12,9 @@ import {
   startAt,
   endAt,
   limit,
+  arrayUnion,
+  PartialWithFieldValue,
+  arrayRemove,
 } from '@angular/fire/firestore';
 import { User as FbUser, UserCredential } from '@angular/fire/auth';
 import { Observable, of, from } from 'rxjs';
@@ -65,9 +68,18 @@ export class UserService {
     return docData(ref).pipe(map((user) => user ?? null));
   }
 
-  updateUser$(uid: string, patch: Partial<User>): Observable<void> {
+  updateUser$(uid: string, patch: PartialWithFieldValue<User>): Observable<void> {
     const ref = doc(this.db, 'users', uid).withConverter(userConverter);
     return from(updateDoc(ref, { ...patch, updatedAt: Date.now() }));
+  }
+
+  addProjectToUser$(userId: string, projectId: string): Observable<void> {
+    return this.updateUser$(userId, {projects: arrayUnion(projectId)})
+
+  }
+
+  removeProjectFromUser$(userId: string, projectId: string): Observable<void> {
+    return this.updateUser$(userId, {projects: arrayRemove(projectId)})
   }
 
   listUsers$(): Observable<User[]> {

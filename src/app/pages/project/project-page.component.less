@@ -1,0 +1,47 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.title {
+  padding: 50px;
+  font-size: 38px;
+}
+tui-tabs {
+  padding: 0 50px;
+  font-size: 20px;
+}
+.title,
+tui-tabs {
+  flex: 0 0 auto;
+}
+
+.body {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.scroll-wrap {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 75vh;
+}
+
+.scroll-host {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 24px 50px 50px;
+  box-sizing: border-box;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.body {
+  background-color: #fff;
+}
