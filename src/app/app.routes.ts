@@ -22,6 +22,7 @@ export const appRoutes: Route[] = [
     path: '',
     component: MainPageComponent,      
     canActivate: [authGuard],
+    canActivateChild: [authGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'projects' },
 
