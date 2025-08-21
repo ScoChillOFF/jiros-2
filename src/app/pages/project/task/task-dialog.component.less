@@ -13,6 +13,10 @@ h1 {
   flex-flow: row wrap;
   justify-content: space-between;
   gap: 30px;
+
+  @media (max-width: 520px) {
+    flex-flow: column-reverse nowrap;
+  }
 }
 
 .left-side {
@@ -24,4 +28,8 @@ h1 {
   flex-shrink: 0;
   height: 100%;
   width: fit-content;
+
+  @media (max-width: 520px) {
+    width: 100%;
+  }
 }
