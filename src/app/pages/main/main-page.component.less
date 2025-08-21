@@ -19,8 +19,12 @@
   min-height: 0; 
 }
 
+app-mobile-navbar {
+  display: none;
+}
+
 @media (max-width: 520px) {
-  app-sidebar {
-    display: none;
+  :host {
+    flex-direction: column;
   }
 }
