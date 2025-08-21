@@ -146,7 +146,9 @@ export class TaskService {
     return this.projects.currentProjectId$.pipe(
       take(1),
       switchMap((projectId) => {
-        if (!projectId) throw new Error('Проект не выбран');
+        if (!projectId) {
+          throw new Error('No project selected');
+        }
         const ref = doc(this.db, 'projects', projectId, 'tasks', taskId);
         return from(deleteDoc(ref));
       })
@@ -167,7 +169,7 @@ export class TaskService {
           taskId,
           'comments'
         ).withConverter(commentConverter);
-        const q = query(col, orderBy('createdAt', 'asc'));
+        const q = query(col, orderBy('createdAt', 'desc'));
         return collectionData(q);
       })
     );
