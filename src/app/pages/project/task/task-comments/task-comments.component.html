@@ -1,0 +1,30 @@
+<div class="container">
+  <h3>Comments</h3>
+  <form (ngSubmit)="onCommentCreate()" [formGroup]="commentForm">
+    <tui-textfield tuiTextfieldSize="m">
+      <label for="comment-field" tuiLabel>Leave a comment...</label>
+      <textarea id="comment-field" formControlName="text" tuiTextarea>
+      </textarea>
+    </tui-textfield>
+    <button [disabled]="commentForm.invalid" tuiButton size="s" type="submit">
+      Submit
+    </button>
+  </form>
+
+  <div class="comments">
+    @for (item of commentsWithUser$ | async; track item.comment.id) {
+      <div class="comment">
+        @if (item.user) {
+          <app-user-card
+            [titleSize]="16"
+            [subtitleSize]="12"
+            [user]="item.user"
+          ></app-user-card>
+        }
+        <p class="message">
+          {{ item.comment.message }}
+        </p>
+      </div>
+    }
+  </div>
+</div>

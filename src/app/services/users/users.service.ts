@@ -63,23 +63,28 @@ export class UserService {
       .pipe(switchMap((cred: UserCredential) => this.getUser$(cred.user.uid)));
   }
 
-  getUser$(uid: string): Observable<User | null> {
+  getUser$(uid: string | null): Observable<User | null> {
+    if (!uid) {
+      return of(null);
+    }
     const ref = doc(this.db, 'users', uid).withConverter(userConverter);
     return docData(ref).pipe(map((user) => user ?? null));
   }
 
-  updateUser$(uid: string, patch: PartialWithFieldValue<User>): Observable<void> {
+  updateUser$(
+    uid: string,
+    patch: PartialWithFieldValue<User>
+  ): Observable<void> {
     const ref = doc(this.db, 'users', uid).withConverter(userConverter);
     return from(updateDoc(ref, { ...patch, updatedAt: Date.now() }));
   }
 
   addProjectToUser$(userId: string, projectId: string): Observable<void> {
-    return this.updateUser$(userId, {projects: arrayUnion(projectId)})
-
+    return this.updateUser$(userId, { projects: arrayUnion(projectId) });
   }
 
   removeProjectFromUser$(userId: string, projectId: string): Observable<void> {
-    return this.updateUser$(userId, {projects: arrayRemove(projectId)})
+    return this.updateUser$(userId, { projects: arrayRemove(projectId) });
   }
 
   listUsers$(): Observable<User[]> {
@@ -104,6 +109,6 @@ export class UserService {
       limit(max)
     );
 
-    return collectionData(q); 
+    return collectionData(q);
   }
 }

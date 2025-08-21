@@ -15,6 +15,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TuiTextfield } from '@taiga-ui/core';
 import { TaskPriority, TaskStatus } from '../../../models/task.interface';
 import { TaskDetailsFormComponent } from "./task-details-form/task-details-form.component";
+import { TaskCommentsComponent } from "./task-comments/task-comments.component";
 
 @Component({
   selector: 'app-task-dialog',
@@ -24,7 +25,8 @@ import { TaskDetailsFormComponent } from "./task-details-form/task-details-form.
     ReactiveFormsModule,
     TuiDataListWrapper,
     TuiTextfield,
-    TaskDetailsFormComponent
+    TaskDetailsFormComponent,
+    TaskCommentsComponent
 ],
   templateUrl: './task-dialog.component.html',
   styleUrl: './task-dialog.component.less',

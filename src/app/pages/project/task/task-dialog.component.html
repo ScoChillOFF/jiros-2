@@ -3,7 +3,9 @@
     <h1>{{ task.title }}</h1>
     <hr />
     <div class="content">
-      <div class="left-side"></div>
+      <div class="left-side">
+        <app-task-comments [task]="task$ | async"></app-task-comments>
+      </div>
       <div class="right-side">
         <app-task-details-form [task]="task$ | async"></app-task-details-form>
       </div>
