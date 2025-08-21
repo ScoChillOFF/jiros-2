@@ -1,0 +1,74 @@
+<form action="" class="task-details" [formGroup]="form">
+  <div class="priority-status">
+    <div class="priority">
+      <label tuiLabel>
+        Priority
+        <tui-textfield
+          tuiChevron
+          tuiTextfieldSize="s"
+          [tuiTextfieldCleaner]="false"
+          [stringify]="stringifyPriority"
+        >
+          <input tuiSelect formControlName="priority" />
+
+          <tui-data-list-wrapper
+            *tuiTextfieldDropdown
+            new
+            [items]="priorityItems"
+          />
+        </tui-textfield>
+      </label>
+    </div>
+
+    <div class="status">
+      <label tuiLabel>
+        Status
+        <tui-textfield
+          tuiChevron
+          tuiTextfieldSize="s"
+          [tuiTextfieldCleaner]="false"
+          [stringify]="stringifyStatus"
+        >
+          <input tuiSelect formControlName="status" />
+
+          <tui-data-list-wrapper
+            *tuiTextfieldDropdown
+            new
+            [items]="statusItems"
+          />
+        </tui-textfield>
+      </label>
+    </div>
+  </div>
+
+  <label tuiLabel>
+    Assigned to:
+    <tui-textfield tuiTextfieldSize="m" tuiSelect [content]="content">
+      <input formControlName="assignee" tuiSelect placeholder="Not assigned" />
+      <tui-data-list-wrapper
+        *tuiTextfieldDropdown
+        new
+        [itemContent]="content"
+        [items]="members$ | async"
+      />
+    </tui-textfield>
+  </label>
+
+  <label tuiLabel>
+    Due date:
+    <tui-textfield tuiTextfieldSize="m">
+      <input tuiInputDate formControlName="dueDate" />
+      <tui-calendar *tuiTextfieldDropdown />
+    </tui-textfield>
+  </label>
+
+  <ng-template #content let-member>
+    <div>
+      <app-user-card
+        [user]="member"
+        [titleSize]="14"
+        [subtitleSize]="10"
+      ></app-user-card>
+    </div>
+  </ng-template>
+</form>

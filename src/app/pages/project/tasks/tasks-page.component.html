@@ -14,7 +14,7 @@
             </thead>
             <tbody tuiTbody [data]="tasks">
               @for (task of tasks; track task.id) {
-                <tr class="task" [routerLink]="task.id" tuiTr>
+                <tr class="task" [routerLink]="[]" [queryParams]="{ task: task.id }" tuiTr>
                   <td *tuiCell="'name'" tuiTd>
                     {{ task.title }}
                   </td>
@@ -96,3 +96,18 @@
     </div>
   }
 </div>
+
+<ng-template
+  let-observer
+  [tuiDialog]="isDialogOpen() && !!taskId()"
+  [tuiDialogOptions]="{ size: 'l', scrollable: true, closeable: true }"
+  (tuiDialogChange)="onDialogChange($event)"
+>
+  <div class="dialog">
+    <div class="dialog__body">
+      @if (taskId()) {
+        <app-task-dialog [taskId]="taskId()!" />
+      }
+    </div>
+  </div>
+</ng-template>
