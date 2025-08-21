@@ -8,10 +8,20 @@
 .title {
   padding: 50px;
   font-size: 38px;
+
+  @media (max-width: 520px) {
+    padding: 50px 20px;
+  }
 }
+
 tui-tabs {
   padding: 0 50px;
   font-size: 20px;
+
+  @media (max-width: 520px) {
+    padding: 0 30px;
+    font-size: 18px;
+  }
 }
 .title,
 tui-tabs {
@@ -29,17 +39,10 @@ tui-tabs {
   flex: 1 1 auto;
   min-height: 0;
   max-height: 75vh;
-}
 
-.scroll-host {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow: auto;
-  padding: 24px 50px 50px;
-  box-sizing: border-box;
-
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  @media (max-width: 520px) {
+    max-height: 100vh;
+  }
 }
 
 .body {

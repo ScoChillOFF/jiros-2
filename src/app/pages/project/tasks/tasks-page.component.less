@@ -8,8 +8,8 @@
   gap: 12px;
   padding: 30px 50px;
 
-  @media (max-width: 360px) {
-    padding: 30px 30px;
+  @media (max-width: 520px) {
+    padding: 30px 20px;
   }
 }
 
@@ -49,6 +49,15 @@ table[tuiTable] {
   overflow-x: auto;
 }
 
+.inner-table-wrapper {
+  width: max-content;
+  min-width: 100%;
+}
+
+table[tuiTable] {
+  width: 100%;
+}
+
 tr[tuiTr]:hover > td[tuiTd] {
   cursor: pointer;
   background: var(--tui-background-neutral-1-hover);
@@ -62,8 +71,8 @@ tr[tuiTr]:hover > td[tuiTd] {
 
 .add-task-btn {
   padding: 5px 10px 10px 10px;
-  width: 100%;
   height: 100%;
+  width: 100%;
   cursor: pointer;
   font-weight: 500;
   color: var(--tui-text-secondary);
@@ -84,6 +93,18 @@ tr[tuiTr]:hover > td[tuiTd] {
   gap: 20px;
   padding: 10px;
   align-items: center;
+
+  .add-form-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  @media (max-width: 750px) {
+    gap: 5px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 tui-textfield {
