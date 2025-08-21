@@ -1,4 +1,5 @@
 export default {
+  testEnvironment: 'jsdom',
   displayName: 'course-project',
   preset: './jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],

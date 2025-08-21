@@ -1,8 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
-  collection,
-  collectionData,
   doc,
   setDoc,
   deleteDoc,
@@ -25,14 +23,8 @@ export class MemberService {
     this.projects.currentProject$.pipe(map((p) => p?.ownerId ?? null));
 
   readonly memberIds$: Observable<string[]> =
-    this.projects.currentProjectId$.pipe(
-      switchMap((projectId) => {
-        if (!projectId) return of([]);
-        const col = collection(this.db, 'projects', projectId, 'members');
-        return collectionData(col, { idField: 'id' }).pipe(
-          map((rows) => rows.map((r) => r['id']))
-        );
-      })
+    this.projects.currentProject$.pipe(
+      map((project) => project?.memberIds ?? [])
     );
 
   readonly members$: Observable<User[]> = this.memberIds$.pipe(
