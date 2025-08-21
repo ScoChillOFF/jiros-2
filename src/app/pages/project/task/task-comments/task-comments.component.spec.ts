@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TaskPageComponent } from './task-page.component';
+import { TaskCommentsComponent } from './task-comments.component';
 
-describe('TaskPageComponent', () => {
-  let component: TaskPageComponent;
-  let fixture: ComponentFixture<TaskPageComponent>;
+describe('TaskCommentsComponent', () => {
+  let component: TaskCommentsComponent;
+  let fixture: ComponentFixture<TaskCommentsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TaskPageComponent],
+      imports: [TaskCommentsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TaskPageComponent);
+    fixture = TestBed.createComponent(TaskCommentsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

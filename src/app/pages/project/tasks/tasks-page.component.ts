@@ -1,13 +1,14 @@
 import { TuiTable, TuiTableCell } from '@taiga-ui/addon-table';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit, model } from '@angular/core';
 import { TaskService } from '../../../services/task/task.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { catchError, finalize, of } from 'rxjs';
-import { TuiChip, TuiElasticContainer } from '@taiga-ui/kit';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { catchError, finalize, map, of } from 'rxjs';
+import { TuiChip } from '@taiga-ui/kit';
 import { TaskPriority, TaskStatus } from '../../../models/task.interface';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TuiButton, TuiTextfield } from '@taiga-ui/core';
+import { TuiButton, TuiDialog, TuiTextfield } from '@taiga-ui/core';
+import { TaskDialogComponent } from '../task/task-dialog.component';
 
 @Component({
   selector: 'app-tasks-page.component',
@@ -20,17 +21,14 @@ import { TuiButton, TuiTextfield } from '@taiga-ui/core';
     ReactiveFormsModule,
     TuiButton,
     TuiTextfield,
-],
+    TuiDialog,
+    TaskDialogComponent,
+  ],
   templateUrl: './tasks-page.component.html',
   styleUrl: './tasks-page.component.less',
 })
-export class TasksPageComponent {
+export class TasksPageComponent implements OnInit {
   private taskService = inject(TaskService);
-  columns = {
-    name: { width: '20rem' },
-    priority: { width: '8rem' },
-    status: { width: '10rem' },
-  };
 
   readonly tasks$ = this.taskService.tasks$;
 
@@ -76,6 +74,31 @@ export class TasksPageComponent {
         this.titleCtrl.reset('');
         this.isAddOpen.set(false);
       });
+  }
+
+  isDialogOpen = model(false);
+  taskId = signal<string | null>(null);
+
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  ngOnInit() {
+    this.route.queryParamMap
+      .pipe(map((pm) => pm.get('task')))
+      .subscribe((id) => {
+        this.taskId.set(id);
+        this.isDialogOpen.set(!!id);
+      });
+  }
+
+  onDialogChange(next: boolean) {
+    if (!next) {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { task: null },
+        queryParamsHandling: 'merge',
+      });
+    }
   }
 
   statusLabel(s: TaskStatus): string {
