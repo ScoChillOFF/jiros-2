@@ -5,47 +5,7 @@
     <div class="content">
       <div class="left-side"></div>
       <div class="right-side">
-        <div class="priority-status">
-          <div class="priority">
-            <label tuiLabel for="">
-              Priority
-            <tui-textfield
-              tuiChevron
-              tuiTextfieldSize="s"
-              [tuiTextfieldCleaner]="false"
-              [stringify]="stringifyPriority"
-            >
-                <input tuiSelect [formControl]="priorityControl" />
-                
-                <tui-data-list-wrapper
-                *tuiTextfieldDropdown
-                new
-                [items]="priorityItems"
-                />
-              </tui-textfield>
-            </label>
-          </div>
-
-          <div class="status">
-            <label tuiLabel for="">
-              Status
-            <tui-textfield
-              tuiChevron
-              tuiTextfieldSize="s"
-              [tuiTextfieldCleaner]="false"
-              [stringify]="stringifyStatus"
-            >
-              <input tuiSelect [formControl]="statusControl" />
-
-              <tui-data-list-wrapper
-                *tuiTextfieldDropdown
-                new
-                [items]="statusItems"
-              />
-            </tui-textfield>
-            </label>
-          </div>
-        </div>
+        <app-task-details-form [task]="task$ | async"></app-task-details-form>
       </div>
     </div>
   } @else {
