@@ -14,5 +14,5 @@ export class UserCardComponent {
   readonly user = input.required<User>();
   titleSize = input<number>(18);
   subtitleSize = input<number>(14);
-  avatarSize = input<'xs' | 's' | 'm' | 'l'>('m');
+  avatarSize = input<'xs' | 's' | 'm' | 'l'>('xs');
 }

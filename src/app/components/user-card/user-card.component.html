@@ -1,5 +1,5 @@
 <div class="user">
-  <tui-avatar src="@tui.user" size="xs" />
+  <tui-avatar src="@tui.user" [size]="avatarSize()" />
   @if (user().displayName) {
     <div class="user-name-email" tuiTitle="s">
       <span class="main-name" [style.fontSize.px]="titleSize()">{{
