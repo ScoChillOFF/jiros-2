@@ -1,0 +1,38 @@
+<div class="stats-container">
+  <div class="tasks-count-info">
+    <h3>Tasks count</h3>
+    <div class="counts">
+      @if (tasksCountInfo$ | async; as countInfo) {
+        <p class="count">Total: {{ countInfo.total }}</p>
+        <p class="count">Backlog: {{ countInfo.todo }}</p>
+        <p class="count">In progress: {{ countInfo.inProgress }}</p>
+        <p class="count">Done: {{ countInfo.done }}</p>
+      }
+    </div>
+  </div>
+
+  <div class="members-busyness-info">
+    @if (membersBusynessWithUsers$ | async; as membersBusyness) {
+      @if (membersBusyness.length !== 0) {
+        <h3>Members busyness by tasks</h3>
+        <div class="counts">
+          @for (item of membersBusyness; track item.key) {
+            <div class="member-info">
+              @if (item.key !== 'unassigned') {
+                <app-user-card
+                  [titleSize]="16"
+                  [subtitleSize]="12"
+                  [avatarSize]="'xs'"
+                  [user]="item.user"
+                ></app-user-card>
+              } @else {
+                <span class="user">Unassigned</span>
+              }
+              <p class="count">- {{ item.count }}</p>
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+</div>

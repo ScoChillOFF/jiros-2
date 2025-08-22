@@ -1,0 +1,112 @@
+:host {
+  display: block;
+}
+
+.tasks-list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 12px;
+  padding: 30px 50px;
+
+  @media (max-width: 520px) {
+    padding: 30px 20px;
+  }
+}
+
+td[tuiTd] {
+  font-size: 14px !important;
+  height: 30px;
+  width: 10%;
+}
+
+td:first-child {
+  inline-size: 80%;
+}
+
+td[tuiTd] tui-chip {
+  font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+tbody[tuiTbody] td[tuiTd] {
+  background: var(--tui-base-01, #fff);
+}
+th[tuiTh] {
+  background: var(--tui-background-neutral-1);
+  font-size: 14px !important;
+}
+
+table[tuiTable] {
+  width: 100%;
+  border-radius: 10px;
+  min-width: 400px;
+}
+
+.table-wrapper {
+  border-radius: 12px;
+  border: 1px solid var(--tui-base-03, #e5e5e5);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.inner-table-wrapper {
+  width: max-content;
+  min-width: 100%;
+}
+
+table[tuiTable] {
+  width: 100%;
+}
+
+tr[tuiTr]:hover > td[tuiTd] {
+  cursor: pointer;
+  background: var(--tui-background-neutral-1-hover);
+  transition: background 0.2s ease;
+}
+
+.add-task {
+  font-size: 16px;
+  background-color: var(--tui-background-neutral-1);
+}
+
+.add-task-btn {
+  padding: 5px 10px 10px 10px;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--tui-text-secondary);
+  transition: background-color 0.2s ease;
+
+  .add-icon {
+    color: var(--tui-text-action);
+    font-size: 24px;
+  }
+
+  &:hover {
+    background-color: var(--tui-background-neutral-1-hover);
+  }
+}
+
+.add-form {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  align-items: center;
+
+  .add-form-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  @media (max-width: 750px) {
+    gap: 5px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+tui-textfield {
+  width: 100%;
+}
