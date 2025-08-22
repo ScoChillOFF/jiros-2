@@ -12,25 +12,27 @@
   </div>
 
   <div class="members-busyness-info">
-    <h3>Members busyness by tasks</h3>
-    <div class="counts">
-      @if (membersBusynessWithUsers$ | async; as membersBusyness) {
-        @for (item of membersBusyness; track item.key) {
-          <div class="member-info">
-            @if (item.key !== 'unassigned') {
-              <app-user-card
-                [titleSize]="16"
-                [subtitleSize]="12"
-                [avatarSize]="'xs'"
-                [user]="item.user"
-              ></app-user-card>
-            } @else {
-              <span class="user">unassigned</span>
-            }
-            <p class="count">- {{ item.count }}</p>
-          </div>
-        }
+    @if (membersBusynessWithUsers$ | async; as membersBusyness) {
+      @if (membersBusyness.length !== 0) {
+        <h3>Members busyness by tasks</h3>
+        <div class="counts">
+          @for (item of membersBusyness; track item.key) {
+            <div class="member-info">
+              @if (item.key !== 'unassigned') {
+                <app-user-card
+                  [titleSize]="16"
+                  [subtitleSize]="12"
+                  [avatarSize]="'xs'"
+                  [user]="item.user"
+                ></app-user-card>
+              } @else {
+                <span class="user">Unassigned</span>
+              }
+              <p class="count">- {{ item.count }}</p>
+            </div>
+          }
+        </div>
       }
-    </div>
+    }
   </div>
 </div>
