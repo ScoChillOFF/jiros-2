@@ -9,11 +9,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { TuiTextfield } from '@taiga-ui/core';
-import {
-  TuiDataListWrapper,
-  TuiInputDate,
-  TuiSelect,
-} from '@taiga-ui/kit';
+import { TuiDataListWrapper, TuiInputDate, TuiSelect } from '@taiga-ui/kit';
 import { MemberService } from '../../../../services/members/members.service';
 import { CommonModule } from '@angular/common';
 import { UserCardComponent } from '../../../../components/user-card/user-card.component';
@@ -24,7 +20,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { User } from '../../../../models/user.interface';
-import { of, take, switchMap, filter } from 'rxjs';
+import { of, take, switchMap, filter, finalize } from 'rxjs';
 import { TaskService } from '../../../../services/task/task.service';
 import {
   Task,
@@ -63,6 +59,8 @@ export class TaskDetailsFormComponent implements OnInit {
     filter((id): id is string => !!id)
   );
 
+  private isUpdatingFromTask = false;
+
   readonly members$ = this.memberService.members$;
 
   readonly statusItems: TaskStatus[] = ['todo', 'in_progress', 'done'];
@@ -85,6 +83,10 @@ export class TaskDetailsFormComponent implements OnInit {
       const t = this.task();
       if (!t) {
         this.form.reset({}, { emitEvent: false });
+        return;
+      }
+
+      if (this.isUpdatingFromTask) {
         return;
       }
 
@@ -140,6 +142,7 @@ export class TaskDetailsFormComponent implements OnInit {
   }
 
   private fillFormFromTask(t: Task) {
+    this.isUpdatingFromTask = true;
     this.form.patchValue(
       {
         status: t.status,
@@ -152,7 +155,12 @@ export class TaskDetailsFormComponent implements OnInit {
     );
     this.userService
       .getUser$(t.assigneeId)
-      .pipe(take(1))
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.isUpdatingFromTask = false;
+        })
+      )
       .subscribe((u) => {
         this.form.controls.assignee.setValue(u, { emitEvent: false });
       });
@@ -165,7 +173,7 @@ export class TaskDetailsFormComponent implements OnInit {
     control.valueChanges
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        filter(() => control.dirty),
+        filter(() => control.dirty && !this.isUpdatingFromTask),
         switchMap((v) =>
           this.taskId$.pipe(
             take(1),
