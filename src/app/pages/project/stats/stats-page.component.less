@@ -1,0 +1,36 @@
+.stats-container {
+  padding: 30px 50px;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+  min-width: 375px;
+
+  @media (max-width: 520px) {
+    padding: 30px 20px;
+  }
+}
+
+.tasks-count-info,
+.members-busyness-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  h3 {
+    font-size: 20px;
+  }
+
+  .counts {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 16px;
+  }
+}
+
+.member-info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

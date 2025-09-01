@@ -1,0 +1,75 @@
+.login-page {
+  min-height: 100vh;
+  background: var(--tui-base-02, #f5f7fa);
+
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--tui-text-primary); 
+}
+
+.title .brand {
+  color: var(--tui-text-action); 
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--tui-base-01, #fff);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.toggle > button[tuiButton] {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.submit {
+  align-self: stretch;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.error {
+  color: #d93025;
+  font-size: 12px;
+  margin-top: -4px;
+}
+
+@media (max-width: 360px) {
+  .auth-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  .toggle {
+    gap: 8px;
+  }
+}

@@ -1,0 +1,50 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.title {
+  padding: 50px;
+  font-size: 38px;
+
+  @media (max-width: 520px) {
+    padding: 50px 20px;
+  }
+}
+
+tui-tabs {
+  padding: 0 50px;
+  font-size: 20px;
+
+  @media (max-width: 520px) {
+    padding: 0 30px;
+    font-size: 18px;
+  }
+}
+.title,
+tui-tabs {
+  flex: 0 0 auto;
+}
+
+.body {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.scroll-wrap {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 75vh;
+
+  @media (max-width: 520px) {
+    max-height: 100vh;
+  }
+}
+
+.body {
+  background-color: #fff;
+}

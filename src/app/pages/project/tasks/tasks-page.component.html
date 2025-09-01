@@ -1,0 +1,127 @@
+<div class="content">
+  @if (tasks$ | async; as tasks) {
+    <div class="tasks-list">
+      <div class="table-wrapper">
+        <div class="inner-table-wrapper">
+          @if (tasks.length > 0) {
+            <table
+              tuiTable
+              [columns]="['name', 'priority', 'status', 'dueDate']"
+            >
+              <thead tuiThead>
+                <tr tuiThGroup>
+                  <th tuiTh>Name</th>
+                  <th tuiTh>Priority</th>
+                  <th tuiTh>Status</th>
+                  <th tuiTh>Due Date</th>
+                </tr>
+              </thead>
+              <tbody tuiTbody [data]="tasks">
+                @for (task of tasks; track task.id) {
+                  <tr
+                    class="task"
+                    [routerLink]="[]"
+                    [queryParams]="{ task: task.id }"
+                    tuiTr
+                  >
+                    <td *tuiCell="'name'" tuiTd>
+                      {{ task.title }}
+                    </td>
+                    <td *tuiCell="'priority'" tuiTd>
+                      <tui-chip
+                        size="xs"
+                        [appearance]="priorityTag(task.priority)"
+                        >{{ priorityLabel(task.priority) }}</tui-chip
+                      >
+                    </td>
+                    <td *tuiCell="'status'" tuiTd>
+                      <tui-chip
+                        size="xs"
+                        [appearance]="statusTag(task.status)"
+                        >{{ statusLabel(task.status) }}</tui-chip
+                      >
+                    </td>
+                    <td *tuiCell="'dueDate'" tuiTd>
+                      @if (task.dueDate) {
+                        <tui-chip
+                          size="xs"
+                          [appearance]="
+                            isExpired(task.dueDate) && task.status !== 'done'
+                              ? 'outline-destructive'
+                              : 'outline'
+                          "
+                          >{{ task.dueDate | date: 'mediumDate' }}</tui-chip
+                        >
+                      }
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          }
+          <div class="add-task">
+            @if (!isAddOpen()) {
+              <div
+                class="add-task-btn"
+                (click)="openAdd()"
+                role="button"
+                tabindex="0"
+                (keyup.enter)="openAdd()"
+                (keyup.space)="openAdd()"
+              >
+                <span class="add-icon">+</span> Add task
+              </div>
+            } @else {
+              <div class="add-form">
+                <tui-textfield tuiTextfieldSize="s">
+                  <input
+                    tuiTextfield
+                    [formControl]="titleCtrl"
+                    placeholder="Task title"
+                    (keyup.enter)="submitAdd()"
+                    [readOnly]="isPending()"
+                  />
+                </tui-textfield>
+                <div class="add-form-buttons">
+                  <button
+                    tuiButton
+                    appearance="primary"
+                    size="s"
+                    [disabled]="titleCtrl.invalid || isPending()"
+                    (click)="submitAdd()"
+                  >
+                    Create
+                  </button>
+                  <button
+                    tuiButton
+                    appearance="secondary"
+                    size="s"
+                    [disabled]="isPending()"
+                    (click)="cancelAdd()"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+<ng-template
+  let-observer
+  [tuiDialog]="isDialogOpen() && !!taskId()"
+  [tuiDialogOptions]="{ size: 'l', scrollable: true, closeable: true }"
+  (tuiDialogChange)="onDialogChange($event)"
+>
+  <div class="dialog">
+    <div class="dialog__body">
+      @if (taskId()) {
+        <app-task-dialog [taskId]="taskId()!" />
+      }
+    </div>
+  </div>
+</ng-template>

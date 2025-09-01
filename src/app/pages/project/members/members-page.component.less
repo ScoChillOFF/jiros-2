@@ -1,0 +1,41 @@
+.members-container {
+    padding: 30px 50px;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 20px;
+    min-width: 375px;
+
+    @media (max-width: 520px) {
+        padding: 30px 20px;
+    }
+}
+
+.members-list {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 20px;
+}
+
+.member {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.main-name {
+    color: var(--tui-text-primary);
+    font-size: 18px;
+}
+
+.sub-name[tuiSubtitle] {
+    color: var(--tui-text-secondary);
+    font-size: 14px;
+}
+
+.member tui-avatar {
+    border: 1px solid var(--tui-text-tertiary)
+}
+
+.search-item:hover {
+    background-color: var(--tui-background-neutral-1-hover);
+}

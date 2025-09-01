@@ -1,0 +1,25 @@
+<div class="members-container">
+  @if (isOwner$ | async) {
+    <app-search-box
+      [placeholder]="'Type email to find and add user to project'"
+      [searchFn]="searchFn$"
+      [itemTpl]="userTpl"
+      (itemSelected)="onPick($event)"
+    />
+  }
+
+  <div class="members-list">
+    @for (member of members$ | async; track member.id) {
+      <div class="member">
+        <app-user-card [user]="member"></app-user-card>
+        @if (isOwner$ | async) {
+          <button (click)="onRemoveMember(member.id)" tuiButtonClose tuiIconButton size="xs">Remove</button>
+        }
+      </div>
+    }
+  </div>
+
+  <ng-template #userTpl let-user>
+    <app-user-card class="search-item" [user]="user"></app-user-card>
+  </ng-template>
+</div>
